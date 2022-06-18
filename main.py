@@ -19,7 +19,6 @@ PlayerY = 270
 PlayerSpeed = 0.4
 changeInPlayerX =0
 changeInPlayerY =0
-
 #Draws character
 def Player(x,y):
     screen.blit(PlayerImg,(x,y))
@@ -31,35 +30,47 @@ programRunning = True
 while programRunning == True:
 
     for event in pygame.event.get():
-        
+
         if event.type == pygame.KEYDOWN:
 
             if event.key == pygame.K_LEFT:
                 changeInPlayerX -= PlayerSpeed
+                if PlayerX > screenMaxX-35:
+                    PlayerX -= PlayerSpeed
 
             if event.key == pygame.K_RIGHT:
                 changeInPlayerX += PlayerSpeed
+                if PlayerX < 10:
+                    PlayerX += PlayerSpeed
 
             if event.key == pygame.K_UP:
                 changeInPlayerY -= PlayerSpeed
+                if PlayerY > screenMaxY-50:
+                    PlayerY -= 1
 
             if event.key == pygame.K_DOWN:
                 changeInPlayerY += PlayerSpeed
+                if PlayerY < 20:
+                    PlayerY += 1
+
 
         if event.type == pygame.KEYUP:
-            
+
             if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                 changeInPlayerX = 0
-                
+
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 changeInPlayerY = 0
 
         if event.type == pygame.QUIT:
             programRunning = False
 
+    if PlayerX >= 3 and PlayerX <= screenMaxX-30:
+        PlayerX += changeInPlayerX
 
-    PlayerX += changeInPlayerX
-    PlayerY += changeInPlayerY
+    if PlayerY >= 5 and PlayerY <= screenMaxY-35:
+        PlayerY += changeInPlayerY
+
     screen.fill((0,255,175))
     Player(PlayerX,PlayerY)
     pygame.display.update()
